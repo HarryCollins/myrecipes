@@ -1,11 +1,12 @@
 class RecipesController < ApplicationController
 
   def index
+    #paginate gem used below
     @recipes = Recipe.paginate(page: params[:page], per_page: 4)
   end
 
   def show
-  	##can use the pry gem below - good debug tool for finding params being passed in
+  	#can use the pry gem below - good debug tool for finding params being passed in
     @recipe = Recipe.find(params[:id])
   end
 
