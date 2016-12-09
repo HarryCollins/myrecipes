@@ -4,9 +4,9 @@
 <div class= "container">
   <div class= "row">
     <div class= "col-md-4 pull-right center">
-      <%= gravatar_for @recipe.chef, size: 200 %>
+      <%= link_to gravatar_for(@recipe.chef, size: 200), chef_path(@recipe.chef)  %>
       <p>
-        <h5>Brought to you by <%= @recipe.chef.chefname %></h5>
+        <h4>Brought to you by <%= link_to @recipe.chef.chefname, chef_path(@recipe.chef) %></h4>
       </p>
 	</div>
     <div class= "col-md-8">
@@ -18,6 +18,16 @@
     <div class= "well">
       <p><strong>Steps:</strong></p>
       <%= simple_format(@recipe.description) %>
+      <div class="pull-right">
+        <%= link_to like_recipe_path(@recipe, like: true), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i>
+          <%= @recipe.count_likes %>
+        <% end %> &nbsp&nbsp&nbsp&nbsp
+        <%= link_to like_recipe_path(@recipe, like: false), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-down"></i>
+          <%= @recipe.count_dislikes %>
+        <% end %>
+      </div>
     </div>
     </div>
   </div>
