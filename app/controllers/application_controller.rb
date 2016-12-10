@@ -14,4 +14,11 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def require_user
+    if not logged_in?
+      flash[:danger] = "You need to be logged in see this page"
+      redirect_to root_path
+    end
+  end
+
 end
