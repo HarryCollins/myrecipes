@@ -10,6 +10,12 @@
       <% if logged_in? %>
         <li><%= link_to "New Recipe", new_recipe_path %></li>
       <% end %>
+      <% if logged_in? %>
+        <li><%= link_to "Styles", styles_path %></li>
+      <% end %>
+      <% if logged_in? %>
+        <li><%= link_to "Ingredients", ingredients_path %></li>
+      <% end %>      
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if not logged_in? %>

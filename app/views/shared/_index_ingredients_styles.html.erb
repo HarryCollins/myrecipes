@@ -1,0 +1,37 @@
+
+<div class= "container">
+  <div class="row">
+    <div class="col-md-3 col-md-offset-5">
+      <%= will_paginate %>
+    </div>
+  </div>
+</div>
+
+<% objs.each do |obj| %>
+  <div class= "container">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-5 well">
+        <h4 class='style-ingredient-name'><%= link_to obj.name, controller: "#{resource_type}", action: "show", id: obj %></h4>
+        <p><%= obj.recipes.count %> recipes</p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class= "container">
+  <div class="row">
+    <div class="col-md-3 col-md-offset-5">
+      <%= will_paginate %>
+    </div>
+  </div>
+</div>
+
+<% if logged_in? %>
+  <div class= "container">
+    <div class="row">
+      <div class="col-md-offset-6">
+      <h5><%= link_to "New #{btn_title}", { controller: "#{resource_type}", action: "new" }, class: "btn btn-warning btn-small" %></h5>
+      </div>
+    </div>
+  </div>
+<% end %>

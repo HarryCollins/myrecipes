@@ -82,6 +82,12 @@ h5 {
   text-align: left;
 }
 
+.style-ingredient-name {
+  font-weight: bold;
+  font-size: 1.4em;
+  text-align: left;
+}
+
 .chef-info {
   margin-top: 10px;
 }
@@ -115,4 +121,9 @@ span.picture {
 
 .show_recipe{
   margin: 10px 10px 10px 10px;
+}
+
+
+.chef-well{
+  width: 200%;
 }

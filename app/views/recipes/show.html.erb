@@ -17,29 +17,32 @@
       <div class="show_recipe">
         <%= image_tag(@recipe.picture.url, class: "gravatar") if @recipe.picture? %>
       </div>
-    <div class= "well">
-      <p><strong>Steps:</strong></p>
-      <%= simple_format(@recipe.description) %>
-      <% if logged_in? %>
-        <div class="pull-right">
-          <%= link_to like_recipe_path(@recipe, like: true), method: :post do %>
-            <i class="glyphicon glyphicon-thumbs-up"></i>
-            <%= @recipe.count_likes %>
-          <% end %> &nbsp&nbsp&nbsp&nbsp
-          <%= link_to like_recipe_path(@recipe, like: false), method: :post do %>
-            <i class="glyphicon glyphicon-thumbs-down"></i>
-            <%= @recipe.count_dislikes %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="pull-right">
-            <i class="glyphicon glyphicon-thumbs-up"></i>
-            <%= @recipe.count_likes %>
-              &nbsp&nbsp&nbsp&nbsp
-            <i class="glyphicon glyphicon-thumbs-down"></i>
-            <%= @recipe.count_dislikes %>
-        </div>   
-      <% end %>
+      <div class= "well">
+            <p>Style: <%= render @recipe.styles %></p>
+            <p>Ingredients: <%= render @recipe.ingredients %></p>      
+        <p><strong>Steps:</strong></p>
+        <%= simple_format(@recipe.description) %>
+
+        <% if logged_in? %>
+          <div class="pull-right">
+            <%= link_to like_recipe_path(@recipe, like: true), method: :post do %>
+              <i class="glyphicon glyphicon-thumbs-up"></i>
+              <%= @recipe.count_likes %>
+            <% end %> &nbsp&nbsp&nbsp&nbsp
+            <%= link_to like_recipe_path(@recipe, like: false), method: :post do %>
+              <i class="glyphicon glyphicon-thumbs-down"></i>
+              <%= @recipe.count_dislikes %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="pull-right">
+              <i class="glyphicon glyphicon-thumbs-up"></i>
+              <%= @recipe.count_likes %>
+                &nbsp&nbsp&nbsp&nbsp
+              <i class="glyphicon glyphicon-thumbs-down"></i>
+              <%= @recipe.count_dislikes %>
+          </div>   
+        <% end %>
       </div>
     </div>
   </div>
