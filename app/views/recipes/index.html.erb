@@ -30,6 +30,12 @@
     <div class="col-md-6 well">
       <h4 class="recipe-name"><%= link_to recipe.name, recipe_path(recipe) %></h4>
 
+      <% if recipe.reviews.any? %>
+        <div class="pull-right">
+          <i class="glyphicon glyphicon-star-empty"></i>
+          <%= recipe.average_stars %>
+        </div>
+      <% end %>
       <p><%= recipe.summary %>
       </p>
 

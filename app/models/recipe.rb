@@ -5,6 +5,7 @@ class Recipe < ActiveRecord::Base
   has_many :styles,  through: :recipe_styles
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients,  through: :recipe_ingredients
+  has_many :reviews
 
   validates :chef_id, presence: true
   validates :name, presence: true, length: { minimum: 5, maximum: 100}
@@ -22,6 +23,18 @@ class Recipe < ActiveRecord::Base
 
   def count_dislikes
     self.likes.where(like: false).size
+  end
+
+  def count_reviews
+    self.reviews.select(:rating).size
+  end
+
+  def count_stars
+    self.reviews.sum(:rating)
+  end
+
+  def average_stars
+    (count_stars.to_f / count_reviews).round(2) unless count_reviews == 0
   end
 
   private

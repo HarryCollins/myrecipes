@@ -45,6 +45,12 @@ class RecipesController < ApplicationController
     end
 
   end
+  
+  def destroy
+    Recipe.find(params[:id]).destroy
+    flash[:success] = "Recipe Deleted"
+    redirect_to recipes_path
+  end
 
   def like
     @recipe = Recipe.find(params[:id])
@@ -61,10 +67,19 @@ class RecipesController < ApplicationController
     redirect_to :back
   end
 
-  def destroy
-    Recipe.find(params[:id]).destroy
-    flash[:success] = "Recipe Deleted"
-    redirect_to recipes_path
+  def review
+    @recipe = Recipe.find(params[:id])
+    review = Review.new(header: :header, body: :body, chef: current_user, recipe: @recipe)
+
+    if like.valid?
+      like.save
+      params[:like] == "true" ? opinion = "liked" : opinion = "disliked"  
+      flash[:success] = "You successfully #{opinion} this recipe"
+    else
+      flash[:danger] = "You may only vote once"
+    end
+
+    redirect_to :back
   end
 
   private
