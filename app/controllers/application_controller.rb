@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_user?
-    @current_user.admin?
+   !!current_user && @current_user.admin?
   end
 
   def logged_in?
