@@ -4,10 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   #the methods must be declared as helper methods in order to be available in the views
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :admin_user?
 
   def current_user
     @current_user ||= Chef.find(session[:chef_id]) if session[:chef_id]
+  end
+
+  def admin_user?
+    @current_user.admin?
   end
 
   def logged_in?

@@ -1,7 +1,8 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:edit, :update, :show]
   before_action :require_user, except: [:show, :index]
-  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_same_user_or_admin, only: [:edit, :update]
+  before_action :admin_user?, only: [:destroy]
 
   def index
     #paginate gem used below
@@ -60,6 +61,12 @@ class RecipesController < ApplicationController
     redirect_to :back
   end
 
+  def destroy
+    Recipe.find(params[:id]).destroy
+    flash[:success] = "Recipe Deleted"
+    redirect_to recipes_path
+  end
+
   private
   
     def recipe_params
@@ -70,8 +77,8 @@ class RecipesController < ApplicationController
       @recipe = Recipe.find(params[:id])
     end
 
-    def require_same_user
-      if current_user != @recipe.chef
+    def require_same_user_or_admin
+      if current_user != @recipe.chef && !admin_user?
         flash[:danger] = "You can only edit your own recipes"
         redirect_to root_path
       end

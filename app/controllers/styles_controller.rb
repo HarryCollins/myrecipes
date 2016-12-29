@@ -26,7 +26,6 @@ class StylesController < ApplicationController
     end
   end
 
-
   private
 
   def style_params

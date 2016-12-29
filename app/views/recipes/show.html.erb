@@ -10,16 +10,25 @@
       </p>
 	</div>
     <div class= "col-md-8">
-      <% if logged_in? && current_user == @recipe.chef %>
+      <% if logged_in? && (current_user == @recipe.chef || admin_user?) %>
         <%= link_to "Edit this Recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
       <% end %>
+      <% if admin_user? %>
+        <%= link_to "[Delete Recipe]", @recipe, method: :delete, data:{confirm: "Are you sure?"} %>
+      <% end %>
+
       <h3 class= "left"><%= @recipe.summary %></h3>
       <div class="show_recipe">
         <%= image_tag(@recipe.picture.url, class: "gravatar") if @recipe.picture? %>
       </div>
       <div class= "well">
+
+          <% if @recipe.styles.any? %>
             <p>Style: <%= render @recipe.styles %></p>
-            <p>Ingredients: <%= render @recipe.ingredients %></p>      
+          <% end %>
+          <% if @recipe.ingredients.any? %>
+            <p>Ingredients: <%= render @recipe.ingredients %></p>
+          <% end %>     
         <p><strong>Steps:</strong></p>
         <%= simple_format(@recipe.description) %>
 

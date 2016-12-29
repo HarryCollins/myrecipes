@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   resources :styles, only: [:new, :create, :show, :index]
   resources :ingredients, only: [:new, :create, :show, :index]
-
+  
 end
