@@ -12,6 +12,10 @@ class RecipesController < ApplicationController
   def show
   	#can use the pry gem below - good debug tool for finding params being passed in
     @recipe = Recipe.find(params[:id])
+    @reviews = @recipe.reviews.paginate(page: params[:page], per_page: 4)
+    if logged_in?
+      @current_user_review = current_user.reviews.find_by(recipe: @recipe)
+    end
   end
 
   def new
@@ -55,21 +59,6 @@ class RecipesController < ApplicationController
   def like
     @recipe = Recipe.find(params[:id])
     like = Like.new(like: params[:like], chef: current_user, recipe: @recipe)
-
-    if like.valid?
-      like.save
-      params[:like] == "true" ? opinion = "liked" : opinion = "disliked"  
-      flash[:success] = "You successfully #{opinion} this recipe"
-    else
-      flash[:danger] = "You may only vote once"
-    end
-
-    redirect_to :back
-  end
-
-  def review
-    @recipe = Recipe.find(params[:id])
-    review = Review.new(header: :header, body: :body, chef: current_user, recipe: @recipe)
 
     if like.valid?
       like.save

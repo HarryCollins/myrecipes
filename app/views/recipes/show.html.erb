@@ -8,7 +8,7 @@
       <p>
         <h4>Brought to you by <%= link_to @recipe.chef.chefname, chef_path(@recipe.chef) %></h4>
       </p>
-	</div>
+	  </div>
     <div class= "col-md-8">
       <% if logged_in? && (current_user == @recipe.chef || admin_user?) %>
         <%= link_to "Edit this Recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
@@ -57,4 +57,76 @@
   </div>
 </div>
 
-<h5><%= link_to "Back to Recipes", recipes_path, class: "btn btn-warning btn-small" %></h5>
+<h5><%= link_to "Back to Recipes", recipes_path, class: "btn btn-warning btn-small" %>
+</h5>
+
+<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
+  See Reviews
+</a>
+
+<div class="collapse" id="collapseReviews">
+  <% if @recipe.count_reviews == 0 %>
+    <h2>Be the first to leave a review</h2>
+  <% else %>
+
+    <%= will_paginate @reviews %>
+
+    <div class= "container">
+      <div class= "row">
+        <div class= "col-md-6">
+
+          <h2>Reviews</h2>
+
+          <% if @current_user_review %>
+            <h4 class="your-review-text">Your Review:</h4>
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= @current_user_review.header %></h3>
+              </div>
+              <div class="panel-body">
+                <%= @current_user_review.body %>
+                <br/>
+                <i class="glyphicon glyphicon-star-empty"></i>
+                <%= @current_user_review.rating %>
+              </div>
+              <div class="panel-footer">
+                <h4>Review by <%= link_to @current_user_review.chef.chefname, chef_path(@current_user_review.chef) %> 
+                <% if logged_in? && current_user == @current_user_review.chef %>
+                    <span class = 'pull-right'><%= link_to "Edit", '#' %></span>
+                <% end %>       
+                </h4>
+              </div>
+            </div>
+            <hr/>
+            <br/>
+          <% end %>
+
+          <% @reviews.each do |review| %>
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= review.header %></h3>
+            </div>
+            <div class="panel-body">
+              <%= review.body %>
+              <br/>
+              <i class="glyphicon glyphicon-star-empty"></i>
+              <%= review.rating %>
+            </div>
+            <div class="panel-footer">
+              <h4>Review by <%= link_to review.chef.chefname, chef_path(review.chef) %> 
+              <% if logged_in? && current_user == review.chef %>
+                  <span class = 'pull-right'><%= link_to "Edit", '#' %></span>
+              <% end %>       
+              </h4>
+            </div>
+          </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+  <%= will_paginate @reviews %>
+
+  <% end %>
+</div>
