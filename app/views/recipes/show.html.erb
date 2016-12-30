@@ -1,6 +1,8 @@
 
 <%= render 'shared/page_title', title: @recipe.name %>
 
+<p id="test2">Test2</p>
+
 <div class= "container">
   <div class= "row">
     <div class= "col-md-4 pull-right center">
@@ -60,6 +62,7 @@
 <h5><%= link_to "Back to Recipes", recipes_path, class: "btn btn-warning btn-small" %>
 </h5>
 
+
 <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
   See Reviews
 </a>
@@ -79,7 +82,7 @@
 
   <%= will_paginate @reviews %>
 
-        <h2>Your Review</h2>
+        <h2 id="scroll_target">Your Review</h2>
 
         <div id="review_form">
         <%= render 'reviews/form' %>

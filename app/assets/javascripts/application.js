@@ -15,3 +15,25 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+
+
+console.log("application.js loaded");
+
+var ready;
+ready = function() {
+
+	$(".scroll_to_form").click(function() {
+	    $('html, body').animate({
+	        scrollTop: $("#scroll_target").offset().top
+	    }, 600, function() {
+	    	$("#header_input").focus();
+	    });
+	});
+
+};
+
+
+
+
+$(document).ready(ready);
+$(document).on("page:load", ready);
