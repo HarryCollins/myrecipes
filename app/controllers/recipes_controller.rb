@@ -13,9 +13,11 @@ class RecipesController < ApplicationController
   	#can use the pry gem below - good debug tool for finding params being passed in
     @recipe = Recipe.find(params[:id])
     @reviews = @recipe.reviews.paginate(page: params[:page], per_page: 4)
-    if logged_in?
-      @current_user_review = current_user.reviews.find_by(recipe: @recipe)
-    end
+    if logged_in? && current_user.reviews.find_by(recipe: @recipe)
+      @review = current_user.reviews.find_by(recipe: @recipe)
+    else
+      @review = Review.new
+    end 
   end
 
   def new

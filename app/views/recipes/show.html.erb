@@ -65,68 +65,42 @@
 </a>
 
 <div class="collapse" id="collapseReviews">
-  <% if @recipe.count_reviews == 0 %>
-    <h2>Be the first to leave a review</h2>
-  <% else %>
 
-    <%= will_paginate @reviews %>
+  <div class= "container">
+    <div class= "row">
+      <div class= "col-md-6">
 
-    <div class= "container">
-      <div class= "row">
-        <div class= "col-md-6">
-
-          <h2>Reviews</h2>
-
-          <% if @current_user_review %>
-            <h4 class="your-review-text">Your Review:</h4>
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h3 class="panel-title"><%= @current_user_review.header %></h3>
-              </div>
-              <div class="panel-body">
-                <%= @current_user_review.body %>
-                <br/>
-                <i class="glyphicon glyphicon-star-empty"></i>
-                <%= @current_user_review.rating %>
-              </div>
-              <div class="panel-footer">
-                <h4>Review by <%= link_to @current_user_review.chef.chefname, chef_path(@current_user_review.chef) %> 
-                <% if logged_in? && current_user == @current_user_review.chef %>
-                    <span class = 'pull-right'><%= link_to "Edit", '#' %></span>
-                <% end %>       
-                </h4>
-              </div>
-            </div>
-            <hr/>
-            <br/>
-          <% end %>
-
-          <% @reviews.each do |review| %>
-          <div class="panel panel-success">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= review.header %></h3>
-            </div>
-            <div class="panel-body">
-              <%= review.body %>
-              <br/>
-              <i class="glyphicon glyphicon-star-empty"></i>
-              <%= review.rating %>
-            </div>
-            <div class="panel-footer">
-              <h4>Review by <%= link_to review.chef.chefname, chef_path(review.chef) %> 
-              <% if logged_in? && current_user == review.chef %>
-                  <span class = 'pull-right'><%= link_to "Edit", '#' %></span>
-              <% end %>       
-              </h4>
-            </div>
-          </div>
-          <% end %>
-
-        </div>
-      </div>
-    </div>
+      <% if @recipe.count_reviews == 0 %>
+        <h2>Be the first to leave a review</h2>
+        <div id="review_form">
+        <%= render 'reviews/form' %>
+        </div>    
+      <% else %>
 
   <%= will_paginate @reviews %>
 
-  <% end %>
+        <h2>Your Review</h2>
+
+        <div id="review_form">
+        <%= render 'reviews/form' %>
+        </div>
+
+        <% if !@review.new_record? %>
+          <%= link_to "Delete Review", @review, method: :delete, data:{confirm: "Are you sure?"} , class: "btn btn-danger" %>
+        <% end %>
+
+        <hr/>
+
+        <h2>Reviews</h2>
+
+        <div id="reviews_list">
+        <%= render @reviews %>
+        </div>
+
+  <%= will_paginate @reviews %>
+
+      <% end %>
+      </div>
+    </div>
+  </div>
 </div>
