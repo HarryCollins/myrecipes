@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require turbolinks
 //= require_tree .
 
 
@@ -24,7 +23,7 @@ ready = function() {
 
 	$(".scroll_to_form").click(function() {
 	    $('html, body').animate({
-	        scrollTop: $("#scroll_target").offset().top
+	        scrollTop: $("#scroll_target").offset().top - 100
 	    }, 600, function() {
 	    	$("#header_input").focus();
 	    });
